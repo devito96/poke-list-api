@@ -4,7 +4,7 @@ import CardsList from '../components/cardslist'
 const AppRoutes = () => {
     return (
         <Routes>
-            <Route exact path='/'element={<CardsList />}/>
+            <Route exact path='/' element={<CardsList />}/>
         </Routes>
     )
 }

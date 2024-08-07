@@ -1,16 +1,20 @@
 import { Card } from "../card"
+import { useState, useEffect } from "react"
 
-import getPokeList from "../../services/pokeList"
+import getPokemonData from "../../services/getPokemonData"
 
-async function CardList() {
-    const pokeList = await getPokeList()
+const CardList = () => {
+    const [ pokeList, setPokeList ] = useState([])
 
-    console.log(pokeList)
+    useEffect(async () => {
+        const pokemonData = await getPokemonData()
+        setPokeList(pokemonData)
+    }, [])
+
     return (
         <div>
             <h1>Home</h1>
-            <p>{ pokeList }</p>
-            {/* { getPokeList().map(pokemon => <Card pokemon={pokemon} />)} */}
+            { pokeList.map((pokemon, index) => <Card pokemon={pokemon} key={index}/>) }
         </div>
     )
 }
