@@ -1,0 +1,29 @@
+@font-face {
+    font-family: 'Pokemon Pixel Font';
+    src: url('./pokemon_pixel_font.ttf') format('ttf'),
+    url('./pokemon_pixel_font.eot') format('eot'),
+    url('./pokemon_pixel_font.woff') format('woff'),
+    url('./pokemon_pixel_font.eot') format('eot');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Flexo Bold';
+    src: url('./Flexo-Bold.ttf') format('ttf'),
+    url('./Flexo-Bold.eot') format('eot'),
+    url('./Flexo-Bold.woff') format('woff'),
+    url('./Flexo-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Flexo Medium';
+    src: url('./Flexo-Medium.ttf') format('ttf'),
+    url('./Flexo-Medium.eot') format('eot'),
+    url('./Flexo-Medium.woff') format('woff'),
+    url('./Flexo-Medium.woff2') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}

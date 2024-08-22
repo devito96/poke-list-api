@@ -1,22 +1,23 @@
-import { Card } from "../card"
-import { useState, useEffect } from "react"
+import { Card } from '../card'
 
-import getPokemonData from "../../services/getPokemonData"
+import styled from 'styled-components'
 
-const CardList = () => {
-    const [ pokeList, setPokeList ] = useState([])
-
-    useEffect(async () => {
-        const pokemonData = await getPokemonData()
-        setPokeList(pokemonData)
-    }, [])
+const CardsList = ({ pokemons }) => {
 
     return (
-        <div>
-            <h1>Home</h1>
-            { pokeList.map((pokemon, index) => <Card pokemon={pokemon} key={index}/>) }
-        </div>
+        <Container>
+            {pokemons.map((pokemon, index) => (
+                <Card pokemon={pokemon} key={index} />
+            ))}
+        </Container>
     )
 }
 
-export default CardList
+const Container = styled.div`
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+       
+`
+export { CardsList }
