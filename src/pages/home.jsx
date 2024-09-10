@@ -1,16 +1,18 @@
-import { useState, useEffect } from "react"
-import styled from "styled-components"
-
+import { useState, useEffect, useContext } from "react"
 import { CardsList } from "../components/cardslist"
+import { getPokemonList } from "../services/getPokemonList"
+import { ThemeTogglerButton } from "../components/themeTogglerButton"
+import { ThemeContext } from "../contexts/theme-toggler"
+import { Container } from "../styles/home-style"
 
-import getPokemonList from "../services/getPokemonList"
-
-import filterBlack from "./../assets/images/filter-icon-black.png"
+import filterWhite from "./../assets/images/filter-icon-white.png"
 
 const Home = () => {
     const [loading, setLoading] = useState(false)
     const [offset, setOffset] = useState(0)
     const [pokeData, setPokeData] = useState([])
+
+    const { theme } = useContext(ThemeContext);
 
     useEffect(() => {
         setLoading(true)
@@ -36,16 +38,18 @@ const Home = () => {
         setOffset(offset + 10)
     }
 
-
     return (
-        <Container>
+        <Container theme={theme}>
             <div className="main">
                 <div className="title">
-                    <h1>Pokémon List</h1>
-                    <img src={filterBlack} alt="filter icon" className="filter" />
+                    <h1>PokéList - Search your favorite pokémon!</h1>
+                    <div className="btns-container">
+                        <img src={filterWhite} alt="filter icon" className="btn filter" onClick={() => alert('Not implemented yet!')} />
+                        <ThemeTogglerButton />
+                    </div>
                 </div>
 
-                <span className="line" />
+                <span className="divider" />
 
                 <div className="cards">
                     <CardsList pokemons={pokeData} />
@@ -53,63 +57,12 @@ const Home = () => {
 
                 <div className="show-more">
                     <button onClick={handleClick}>
-                        {loading ? 'Loading...' : 'Show more'}
+                        {loading ? 'Loading...' : 'Show more Pokémon'}
                     </button>
                 </div>
             </div>
         </Container>
-
     )
 }
-
-const Container = styled.div` 
-    & {
-        background-color: #eeeeee;
-        opacity: 1;
-        background-image:  radial-gradient(#ffffff 4px, transparent 4px), radial-gradient(#ffffff 4px, #eeeeee 4px);
-        background-size: 80px 80px;
-        background-position: 0 0,40px 40px;
-    }
-
-    .main {
-        background-color: #efefef;
-        width: 85%;
-        margin: 0 auto;
-    }
-
-    .title {
-        width: 80%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px;
-        margin: 0 auto;
-    }
-
-    .title .filter {
-        cursor: pointer;
-        transition: 0.3s;   
-    }
-
-    .title .filter:hover {
-        transform: scale(1.1);
-    }
-    
-    .line {
-        display: block;
-        content: '';
-        background-color: #ccc;
-        width: 82%;
-        height: 2px;
-        margin: 0 auto 30px;
-    }
-
-    .show-more {
-        display: flex;
-        justify-content: center;
-        padding: 50px;
-    
-    }
-`
 
 export { Home }

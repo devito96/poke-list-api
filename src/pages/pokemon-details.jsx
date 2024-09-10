@@ -1,37 +1,123 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useEffect, useState, useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { getPokemonData } from "../services/getPokemonData";
-import styled from "styled-components";
-import "../css/types.css"
+import { ThemeContext } from "../contexts/theme-toggler";
+import { Container } from "../styles/pokemon-details-style";
+
+import whiteArrow from "../assets/images/white-arrow.png";
+import "../styles/types.css";
 
 const PokemonDetails = () => {
+    const { theme } = useContext(ThemeContext);
+    const { pokemon } = useParams();
+    const navigate = useNavigate();
+    const [pokeInfos, setPokeInfos] = useState({
+        abilities: [],
+        types: [],
+        moves: []
+    });
+
+    const fetchData = async (pokeName) => {
+        const pokeData = await getPokemonData(pokeName);
+        setPokeInfos(pokeData);
+    }
+
     try {
-        const { pokemon } = useParams();
-
-        const [pokeInfos, setPokeInfos] = useState({});
-
         useEffect(() => {
-            const fetchData = async () => {
-                const pokeData = await getPokemonData(pokemon);
-                setPokeInfos(pokeData);
-            }
-            fetchData();
-        }, [])
+            fetchData(pokemon);
+        }, [pokemon])
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
 
-        return (
-            <Container>
-                <div className="main">
-                    <h1 className="pokemon-name"><span className="pokemon-name span">{pokeInfos.name}</span> N° {pokeInfos.pokedexId}</h1>
-                    <div className="images">
-                        <img src={pokeInfos.frontImg} alt={pokeInfos.name} />
-                        <img src={pokeInfos.backImg} alt={`${pokeInfos.name}'s back`} />
-                        <p className="img-alt">Normal {pokeInfos.name}'s front and back view</p>
+    const navigateToPokemon = async (type) => {
+        let newPokeData
+        if (type === "prev") {
+            pokeInfos.prevPokemon === 10000 ? pokeInfos.prevPokemon = 1025 : pokeInfos.prevPokemon
+            newPokeData = await getPokemonData(pokeInfos.prevPokemon);
+            setPokeInfos(newPokeData);
+        } else if (type === "next") {
+            pokeInfos.nextPokemon === 1026 ? pokeInfos.nextPokemon = 10001 : pokeInfos.nextPokemon
+            newPokeData = await getPokemonData(pokeInfos.nextPokemon);
+        }
+        if (newPokeData) {
+            navigate(`/pokemon-info/${newPokeData.name}`);
+        }
+    }
 
-                        <img src={pokeInfos.frontShinyImg} alt={`${pokeInfos.name} Shiny`} />
-                        <img src={pokeInfos.backShinyImg} alt={`${pokeInfos.name} Shiny's back`} />
-                        <p className="img-alt">Shiny {pokeInfos.name}'s front and back view</p>
-                    </div>
+    return (
+        <Container theme={theme}>
+            <div className="main">
+                <div className="nav-btns">
+                    <button
+                        className="prev-btn nav-btn"
+                        onClick={() => navigateToPokemon("prev")}
+                        disabled={pokeInfos.prevPokemon === 0}
+                    >
+                        <img src={whiteArrow} alt="back arrow" />
+                        <span> N° {pokeInfos.prevPokemon}</span>
+                        <h3 className="prev-pokemon-name">Prev Pokémon </h3>
+                    </button>
 
+                    <button
+                        className="next-btn nav-btn"
+                        onClick={() => navigateToPokemon("next")}
+                        disabled={pokeInfos.nextPokemon === 10278}
+                    >
+                        <h3 className="next-pokemon-name">Next Pokémon </h3>
+                        <span> N° {pokeInfos.nextPokemon}</span>
+                        <img src={whiteArrow} alt="next arrow" />
+                    </button>
+                </div>
+
+                <div className="pokemon-name">
+                    <h1>
+                        <span className="span">{pokeInfos.name} </span>
+                        N° {pokeInfos.pokedexId}
+                    </h1>
+                </div>
+
+                <div className="images">
+                    <h2>{pokeInfos.name}'s visuals</h2>
+
+                    {
+                        pokeInfos.frontImg ?
+                            <>
+                                <p className="img-alt">Normal {pokeInfos.name}'s front and back view</p>
+                                <img src={pokeInfos.frontImg} alt={pokeInfos.name} />
+                            </>
+                            :
+                            <p>{pokeInfos.name}'s front view not available</p>
+                    }
+
+                    {
+                        pokeInfos.backImg ?
+                            <img src={pokeInfos.backImg} alt={`${pokeInfos.name}'s back`} />
+                            :
+                            <p>{pokeInfos.name}'s back view not available</p>
+
+                    }
+
+                    {
+                        pokeInfos.frontShinyImg ?
+                            <img src={pokeInfos.frontShinyImg} alt={`${pokeInfos.name} Shiny`} />
+                            :
+                            <p>Shiny {pokeInfos.name}'s front view not available</p>
+                    }
+
+
+                    {
+                        pokeInfos.backShinyImg ?
+                            <>
+                                <img src={pokeInfos.backShinyImg} alt={`${pokeInfos.name} Shiny's back`} />
+                                <p className="img-alt">Shiny {pokeInfos.name}'s front and back view</p>
+                            </>
+                            :
+                            <p>Shiny {pokeInfos.name}'s back view not available</p>
+                    }
+
+                </div>
+                <div className="infos-container">
                     <div className="info-chart">
                         <h3>Pokédex Number: <span># {pokeInfos.pokedexId}</span></h3>
                         <ul>
@@ -51,7 +137,6 @@ const PokemonDetails = () => {
                     <div className="types">
                         <h3>Type{pokeInfos.types.length > 1 ? 's' : ''}</h3>
                         <ul>
-
                             {
                                 pokeInfos.types.map((type, index) => {
                                     return (
@@ -63,13 +148,18 @@ const PokemonDetails = () => {
                             }
                         </ul>
                     </div>
-                    <ul className="moves">
-                        <h2>Moves</h2> 
+                </div>
+
+
+                <div className="moves">
+                    <h2>Move List</h2>
+                    <p>List of all {pokeInfos.name}'s moves</p>
+                    <ul>
                         {
                             pokeInfos.moves.map((move, index) => {
                                 return (
                                     <li key={index}>
-                                        <p>{move.move.name}</p>
+                                        {move.move.name}
                                     </li>
                                 )
                             })
@@ -77,106 +167,13 @@ const PokemonDetails = () => {
 
                     </ul>
                 </div>
-            </Container>
+            </div>
+        </Container>
 
-        )
-    } catch (error) {
-        console.error('Ti fudeu negrao deu ruim', error)
-    }
+    )
+
 }
 
-const Container = styled.div`
-    & {
-        background-color: #eeeeee;
-        opacity: 1;
-        background-image:  radial-gradient(#ffffff 4px, transparent 4px), radial-gradient(#ffffff 4px, #eeeeee 4px);
-        background-size: 80px 80px;
-        background-position: 0 0,40px 40px;
-    }
 
-    .main {
-        width: 80%;
-        margin: 0 auto;
-        background-color: #efefef;
-        text-transform: capitalize;
-        display: grid;
-        grid:
-            "name name" 75px
-            "images infos" auto
-            " . types" 125px
-            "moves moves" auto / 1fr 1fr;
-        gap: 15px;
-    }
-
-    .pokemon-name {
-        grid-area: name;
-        text-align: center;
-        padding: 20px;
-        color: #545454
-    }
-
-    .pokemon-name.span {
-        color: #000000;
-    }
-
-    .images {
-        grid-area: images;
-        margin: 0 auto;
-        border-radius: 10px;
-        width: 500px;
-        height: 500px;
-    }
-
-    .images img {
-        width: 250px;
-        background-color: #dededede;
-    }
-    
-    .info-chart {
-        grid-area: infos;
-        color: #fff;
-        background-color: #30a7d7;
-        border-radius: 10px;
-        margin: 0 20px 0 20px;
-        padding: 20px;
-        height: fit-content;
-    }
-
-    .info-chart h4, .info-chart h3 {
-        color: #000;
-    }
-
-    .info-chart span {
-        color: #FFFFFF;
-        font-weight: 400;
-    }
-
-    .info-chart ul {
-        margin-top: 20px;
-    }
-
-    .info-chart li p {
-        text-transform: none;
-        margin-bottom: 10px;
-    }
-
-    .types {
-        grid-area: types;
-        padding: 20px;
-    }
-    
-    .types h3 {
-        margin-bottom: 15px;
-        font-size: 24px;
-    }
-
-    .types ul {
-        display: flex;
-    }
-
-    .moves {
-        grid-area: moves;
-    }
-`
 
 export { PokemonDetails }

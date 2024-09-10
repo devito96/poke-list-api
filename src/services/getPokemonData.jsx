@@ -4,6 +4,9 @@ async function getPokemonData(pokemon) {
 
     const pokeData = (await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemon}/`)).data;
 
+    const prevPokemon = pokeData.id - 1
+    const nextPokemon = pokeData.id + 1
+
     const abilitiesList = pokeData.abilities;
 
     const abilitiesPromises = abilitiesList.map(async (ability) => {
@@ -22,9 +25,9 @@ async function getPokemonData(pokemon) {
     })
     const abilitiesDetails = await Promise.all(abilitiesPromises)
 
-    console.log(abilitiesDetails)
-
     return {
+        prevPokemon: prevPokemon,
+        nextPokemon: nextPokemon,
         name: pokeData.name,
         pokedexId: pokeData.id,
         frontImg: pokeData.sprites.front_default,

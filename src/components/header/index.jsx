@@ -1,10 +1,8 @@
-import pokeballIcon from "./../../assets/images/pokeball-icon.png"
-import { Link } from "react-router-dom"
-
 import styled from "styled-components"
+import { Link } from "react-router-dom"
+import pokeballIcon from "./../../assets/images/pokeball-icon.png"
 
 const Header = () => {
-
     return (
         <Container>
             <Link to="/">
@@ -19,7 +17,7 @@ const Header = () => {
 
 const Container = styled.header`
         width: 100%;
-        height: 80px;
+        height: 90px;
         background-color: #fc2f51;
         display: flex;
         justify-content: space-between;
@@ -27,14 +25,19 @@ const Container = styled.header`
         padding: 0 20px;
         position: sticky;
         top: 0;
-        z-index:1;
+        z-index:10;
 
     .title {
         display: flex;
         align-items: center;
         cursor: pointer;
         color: #FFFFFF;
+        font-size: 20px;
         transition: 0.3s ease;
+    }
+    
+    .title img {
+        height: 60px;
     }
 
     .title:hover {

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 async function getPokemonList(offset) {
-    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=20&offset=${offset}`);
+    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=10&offset=${offset}`);
 
     const pokemonList = response.data.results;
 
@@ -22,4 +22,4 @@ async function getPokemonList(offset) {
 }
 
 
-export default getPokemonList
+export { getPokemonList }

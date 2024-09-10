@@ -2,14 +2,17 @@ import { BrowserRouter } from 'react-router-dom'
 import { AppRoutes } from './pages/routes'
 import { Header } from './components/header'
 import { createGlobalStyle } from 'styled-components'
+import { ThemeProvider } from './contexts/theme-toggler'
 
 function App() {
   return (
     <>
       <GlobalStyle />
       <BrowserRouter>
-        <Header />
-        <AppRoutes />
+        <ThemeProvider>
+          <Header />
+          <AppRoutes />
+        </ThemeProvider>
       </BrowserRouter>
     </>
   )
