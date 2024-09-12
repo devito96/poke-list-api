@@ -17,10 +17,12 @@ const Card = ({ pokemon }) => {
                     <div className="red-ball2"></div>
                 </div>
                 {
-                    pokemon.image ? <img className="pokemon-image" src={pokemon.image} alt={`Image of ${pokemon.name}`} /> : 
+                    pokemon.image ? (
+                    <img className="pokemon-image" src={pokemon.image} alt={`Image of ${pokemon.name}`} />
+                     ) : ( 
                     <div className="pokemon-image">
                         <img src={pokemonShadow} alt="pokemon shadow" />
-                    </div> 
+                    </div> )
                 }
                 <div className="info">
                     <h2 className="pokemon-info pokemon-name">{pokemon.name}</h2>

@@ -53,7 +53,7 @@ const PokemonDetails = () => {
                         className="prev-btn nav-btn"
                         onClick={() => navigateToPokemon("prev")}
                         disabled={pokeInfos.prevPokemon === 0}
-                    >
+                        >
                         <img src={whiteArrow} alt="back arrow" />
                         <span> N° {pokeInfos.prevPokemon}</span>
                         <h3 className="prev-pokemon-name">Prev Pokémon </h3>
@@ -63,7 +63,7 @@ const PokemonDetails = () => {
                         className="next-btn nav-btn"
                         onClick={() => navigateToPokemon("next")}
                         disabled={pokeInfos.nextPokemon === 10278}
-                    >
+                        >
                         <h3 className="next-pokemon-name">Next Pokémon </h3>
                         <span> N° {pokeInfos.nextPokemon}</span>
                         <img src={whiteArrow} alt="next arrow" />
@@ -81,39 +81,39 @@ const PokemonDetails = () => {
                     <h2>{pokeInfos.name}'s visuals</h2>
 
                     {
-                        pokeInfos.frontImg ?
+                        pokeInfos.frontImg ? (
                             <>
                                 <p className="img-alt">Normal {pokeInfos.name}'s front and back view</p>
                                 <img src={pokeInfos.frontImg} alt={pokeInfos.name} />
                             </>
-                            :
-                            <p>{pokeInfos.name}'s front view not available</p>
+                        ) : (
+                            <p>{pokeInfos.name}'s front view not available</p> )
                     }
 
                     {
-                        pokeInfos.backImg ?
+                        pokeInfos.backImg ? (
                             <img src={pokeInfos.backImg} alt={`${pokeInfos.name}'s back`} />
-                            :
-                            <p>{pokeInfos.name}'s back view not available</p>
+                        ) : (
+                            <p>{pokeInfos.name}'s back view not available</p>)
 
                     }
 
                     {
-                        pokeInfos.frontShinyImg ?
+                        pokeInfos.frontShinyImg ? (
                             <img src={pokeInfos.frontShinyImg} alt={`${pokeInfos.name} Shiny`} />
-                            :
-                            <p>Shiny {pokeInfos.name}'s front view not available</p>
+                        ) : (
+                            <p>Shiny {pokeInfos.name}'s front view not available</p>)
                     }
 
 
                     {
-                        pokeInfos.backShinyImg ?
+                        pokeInfos.backShinyImg ? (
                             <>
                                 <img src={pokeInfos.backShinyImg} alt={`${pokeInfos.name} Shiny's back`} />
                                 <p className="img-alt">Shiny {pokeInfos.name}'s front and back view</p>
                             </>
-                            :
-                            <p>Shiny {pokeInfos.name}'s back view not available</p>
+                        ) : (
+                            <p>Shiny {pokeInfos.name}'s back view not available</p>)
                     }
 
                 </div>
@@ -169,7 +169,6 @@ const PokemonDetails = () => {
                 </div>
             </div>
         </Container>
-
     )
 
 }
