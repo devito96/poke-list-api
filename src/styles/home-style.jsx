@@ -15,7 +15,6 @@ export const Container = styled.div`
     }
 
     .title {
-        color: ${({ theme }) => theme.color};
         width: 90%;
         display: flex;
         justify-content: space-between;
@@ -24,10 +23,19 @@ export const Container = styled.div`
         margin: 0 auto;
     }
 
+    .title h1 {
+        color: #ffffff;
+        font-size: 24px;
+        height: 100%;
+        padding: 25px;
+        border-radius: 10px;
+        background-color: #4dad5b;
+    }
+
     .title .btns-container {
         display: flex;
         justify-content: space-between;
-        width: 175px;
+        width: 150px;
     }
 
     .title .btns-container .btn {

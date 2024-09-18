@@ -34,6 +34,7 @@ The project is still in development, so there's few things that will be correcte
 - [React Router](https://reactrouter.com/en/main) - For URL navigation and SPA uses
 - [Context API](https://legacy.reactjs.org/docs/context.html) - For Theme Toggler use
 - [Styled Components](https://styled-components.com/) - For styles
+- [React Icons](https://react-icons.github.io/react-icons/) - For Icons
 
 
 

@@ -44,8 +44,8 @@ const Home = () => {
                 <div className="title">
                     <h1>PokéList - Search your favorite pokémon!</h1>
                     <div className="btns-container">
-                        <img src={filterWhite} alt="filter icon" className="btn filter" onClick={() => alert('Not implemented yet!')} />
                         <ThemeTogglerButton />
+                        <img src={filterWhite} alt="filter icon" className="btn filter" onClick={() => alert('Not implemented yet!')} />
                     </div>
                 </div>
 
