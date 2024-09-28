@@ -61,5 +61,5 @@ Vitor Hugo
 
 - GitHub - [@devito96](https://github.com/devito96)
 - LinkedIn - [Vitor Hugo](https://www.linkedin.com/in/vitor-hugo-ojeda-johann-060410271/)
-- Twitter - [@vitorugoj](https://www.twitter.com/vitorugoj) (inactive)
+- BlueSky - [@vitorugoj](https://bsky.app/profile/vitorugoj.bsky.social)
 - Discord - [@vhugo2000]()
